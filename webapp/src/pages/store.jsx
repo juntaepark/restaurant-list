@@ -5,15 +5,16 @@ import Modal from '../components/Modal';
 const Store = ({ data }) => {
   let itemList = data;
 
-  const [modalOpen, setModalOpen] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [id, setId] = useState(0);
 
-  const showModal = () => {
-    setModalOpen(true);
+  const onModalAlert = () => {
+    setModal(!modal);
   };
 
   return (
     <>
-      {modalOpen && <Modal setModalOpen={setModalOpen} />}
+      {modal && <Modal onOpenAlert={onModalAlert} id={id} />}
       <section>
         <h1 className="tracking-wider pt-6 pr-6	pb-8 uppercase text-indigo-600 text-3xl	font-sans mt-4 pl-9">
           EAT
@@ -36,9 +37,12 @@ const Store = ({ data }) => {
                 <img
                   key={content.id}
                   src={content.image}
-                  className="max-w-full h-auto"
-                  alt="..."
-                  onClick={showModal}
+                  className="w-40 h-40 object-cover rounded-md"
+                  alt="image"
+                  onClick={() => {
+                    setId(content.id);
+                    setModal(!modal);
+                  }}
                 />
               );
             })}
